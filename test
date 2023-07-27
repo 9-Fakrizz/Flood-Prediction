@@ -1,0 +1,12 @@
+import math
+import numpy as np
+
+inputs = np.empty((2, 3), dtype=object)
+
+for i in range(2):
+    for j in range(3):
+           inputs[i, j]  = input("Enter input {}{}: ".format(i, j))
+
+for i in range(2):
+    for j in range(3):
+        print("Input {}{}: {}".format(i, j, inputs[i, j]))
