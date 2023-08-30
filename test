@@ -1,12 +1,27 @@
-import math
 import numpy as np
 
-inputs = np.empty((2, 3), dtype=object)
+def data_matrix(file_path, rows, columns):
+    data = np.zeros((rows, columns))
+    l = 0
+    with open(file_path, 'r') as file:
+        for line in file:
+            if l < rows:  
+                values = line.strip().split()
+                for column in range(columns):
+                    value = float(values[column])
+                    data[l, column] = value
+                l += 1  
 
-for i in range(2):
-    for j in range(3):
-           inputs[i, j]  = input("Enter input {}{}: ".format(i, j))
+    return data
 
-for i in range(2):
-    for j in range(3):
-        print("Input {}{}: {}".format(i, j, inputs[i, j]))
+
+
+hidden_size = 2
+
+input_data ='flood_data_set.txt'
+data = data_matrix(input_data,314,9)
+print(data)
+
+
+
+
