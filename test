@@ -15,13 +15,26 @@ def data_matrix(file_path, rows, columns):
     return data
 
 
+source_data ='flood_data_set.txt'
+data = data_matrix(source_data,314,9)
+data_normalized = data / 500
+input_data = data_normalized[:,:8]
+output_data = data_normalized[:,8:]
 
+
+#architecture
 hidden_size = 2
+input_size = input_data.shape[1]
+output_size = output_data.shape[1]
 
-input_data ='flood_data_set.txt'
-data = data_matrix(input_data,314,9)
-print(data)
+np.random.seed(42) 
+weights_hidden = np.random.rand(input_size, hidden_size)
+biases_hidden = np.random.rand(hidden_size)
+weights_output = np.random.rand(hidden_size, output_size)
+biases_output = np.random.rand(output_size)
 
+epochs = 10
+print()
 
 
 
