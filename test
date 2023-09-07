@@ -39,8 +39,8 @@ def relu(x):
 def relu_derivative(x):
     return np.where(x > 0, 1, 0)
 
-epochs = 1000
-learning_rate = 0.01
+epochs = 10000
+learning_rate = 0.0001
 
 print("started_bias_hidden :\n", biases_hidden)
 print("started_weights_hidden : \n", weights_hidden)
@@ -57,6 +57,7 @@ for epoch in range(epochs) :
 
     #calculate the loss (mean squared error)
     loss = np.mean((predicted_output - output_data) ** 2)
+    loss = round(loss,8)
     
     # Backpropagation
     output_error = predicted_output - output_data
@@ -68,6 +69,10 @@ for epoch in range(epochs) :
     weights_hidden -= learning_rate * np.dot(input_data.T, hidden_error)
     biases_hidden -= learning_rate * np.sum(hidden_error, axis=0)
 
-print("Loss >> ",loss)
+    #print("Loss >> ",round(loss,8))
+   # print("Predicted output : \n",predicted_output) 
+
+print("Loss >> ",round(loss,8)) 
 predicted_output = predicted_output*500
 print("Predicted output : \n",predicted_output) 
+
