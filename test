@@ -16,7 +16,7 @@ def data_matrix(file_path, rows, columns):
 
 
 source_data ='flood_data_set.txt'
-data = data_matrix(source_data,314,9)
+data = data_matrix(source_data,252,9) #training set fold1 not swap
 data_normalized = data / 500
 input_data = data_normalized[:,:8]
 output_data = data_normalized[:,8:]
@@ -33,8 +33,41 @@ biases_hidden = np.random.rand(hidden_size)
 weights_output = np.random.rand(hidden_size, output_size)
 biases_output = np.random.rand(output_size)
 
-epochs = 10
-print()
+def relu(x):
+    return np.maximum(0, x)
 
+def relu_derivative(x):
+    return np.where(x > 0, 1, 0)
 
+epochs = 1000
+learning_rate = 0.01
 
+print("started_bias_hidden :\n", biases_hidden)
+print("started_weights_hidden : \n", weights_hidden)
+print("started_bias_output :\n", biases_output)
+print("started_weights_output : \n", weights_output)
+print("-------------------------------")
+
+for epoch in range(epochs) :
+    #forward propagation
+    hidden_layer_input = np.dot(input_data, weights_hidden) + biases_hidden
+    hidden_layer_output = relu(hidden_layer_input)
+    output_layer_input = np.dot(hidden_layer_output, weights_output) + biases_output
+    predicted_output = output_layer_input
+
+    #calculate the loss (mean squared error)
+    loss = np.mean((predicted_output - output_data) ** 2)
+    
+    # Backpropagation
+    output_error = predicted_output - output_data
+    output_gradient = output_error
+    weights_output -= learning_rate * np.dot(hidden_layer_output.T, output_gradient)
+    biases_output -= learning_rate * np.sum(output_gradient, axis=0)
+
+    hidden_error = np.dot(output_gradient, weights_output.T) * relu_derivative(hidden_layer_input)
+    weights_hidden -= learning_rate * np.dot(input_data.T, hidden_error)
+    biases_hidden -= learning_rate * np.sum(hidden_error, axis=0)
+
+print("Loss >> ",loss)
+predicted_output = predicted_output*500
+print("Predicted output : \n",predicted_output) 
