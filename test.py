@@ -47,7 +47,7 @@ prev_weights_hidden_change = np.zeros_like(weights_hidden)
 prev_biases_hidden_change = np.zeros_like(biases_hidden)
 
 
-def relu(x):
+def relu(x): # try to use tanh()
     return np.maximum(0, x)
 
 def relu_derivative(x):
@@ -55,7 +55,7 @@ def relu_derivative(x):
 
 epochs = 80000
 learning_rate = 0.0001
-momentum_rate = 0.2
+momentum_rate = 0.1
 i = 0
 plot_epoch=[]
 plot_loss=[]
@@ -68,10 +68,10 @@ print("-------------------------------")
 
 for epoch in range(epochs) :
     #forward propagation
-    hidden_layer_input = np.dot(input_data, weights_hidden) + biases_hidden
-    hidden_layer_output = relu(hidden_layer_input)
-    output_layer_input = np.dot(hidden_layer_output, weights_output) + biases_output
-    predicted_output = output_layer_input
+    hidden_layer_input = np.dot(input_data, weights_hidden) + biases_hidden  #V(i)
+    hidden_layer_output = relu(hidden_layer_input)   #Y(i)
+    output_layer_input = np.dot(hidden_layer_output, weights_output) + biases_output #O(i)
+    predicted_output = output_layer_input  #keep output value to compare and find sum square error
 
     #calculate the loss (mean squared error)
     loss = np.mean((predicted_output - output_data) ** 2)
@@ -139,7 +139,7 @@ plt.grid(True)
 plt.tight_layout()
 plt.show()'''
 
-#forward propagation
+#forward propagation for test set
 unsee_hidden_layer_input = np.dot(unsee_input_data, final_weights_hidden) + final_bias_hidden
 unsee_hidden_layer_output = relu(unsee_hidden_layer_input)
 unsee_output_layer_input = np.dot(unsee_hidden_layer_output, fianl_weights_output) + fianl_bias_output
